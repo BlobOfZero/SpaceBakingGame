@@ -19,12 +19,6 @@ public class ShopScript : MonoBehaviour
         shopCanvas.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnTriggerEnter()
     {
         if(inventory.killCoins >= 5)
