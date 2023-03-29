@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private InputAction grappleAction;
     private InputAction jetpackAction;
     private InputAction shopAction;
+    public InputAction pauseAction;
 
     // Ammo var
     private int maxAmmo = 10;
@@ -52,9 +53,12 @@ public class PlayerController : MonoBehaviour
     public bool freeze;
     public bool activeGrapple;
 
-    //shop vars
+    // shop vars
     public Canvas shopCanvas;
     bool shopOpen = false;
+
+    // pause var
+    PauseMenu pauseScript;
 
     private void Awake()
     {
@@ -68,6 +72,7 @@ public class PlayerController : MonoBehaviour
         grappleAction = playerInput.actions["Grapple"];
         jetpackAction = playerInput.actions["Jetpack"];
         shopAction = playerInput.actions["Shop"];
+        pauseAction = playerInput.actions["Pause"];
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
