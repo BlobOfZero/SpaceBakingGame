@@ -393,7 +393,6 @@
 "Assets/Scripts/BulletController.cs"
 "Assets/Scripts/CrystalTP.cs"
 "Assets/Scripts/EnemyAI.cs"
-"Assets/Scripts/GrapplingScript.cs"
 "Assets/Scripts/JetpackController.cs"
 "Assets/Scripts/MenuController.cs"
 "Assets/Scripts/PauseMenu.cs"

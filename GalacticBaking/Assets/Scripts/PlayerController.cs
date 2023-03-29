@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction shootAction;
-    private InputAction grappleAction;
     private InputAction jetpackAction;
     private InputAction shopAction;
     public InputAction pauseAction;
@@ -59,6 +58,8 @@ public class PlayerController : MonoBehaviour
 
     // pause var
     PauseMenu pauseScript;
+    public GameObject gameManager;
+    public bool iisPaused = false;
 
     private void Awake()
     {
@@ -69,7 +70,6 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         shootAction = playerInput.actions["Shoot"];
-        grappleAction = playerInput.actions["Grapple"];
         jetpackAction = playerInput.actions["Jetpack"];
         shopAction = playerInput.actions["Shop"];
         pauseAction = playerInput.actions["Pause"];
@@ -97,8 +97,9 @@ public class PlayerController : MonoBehaviour
 
     private void ShootGun()
     {
-        
-        if(currentAmmo > 0 && shopOpen == false)
+        // shooting gun functionality
+
+        if(iisPaused == false && currentAmmo > 0 && shopOpen == false)
         {
         currentAmmo --; 
         RaycastHit hit;
@@ -134,8 +135,10 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.forward = move;
         }
 
+        // jumping
         MovementJump();
         
+        // Jetpack hover input gravity
         if(Input.GetKey(KeyCode.Q) && currentFuel > 1)
         {
             playerVelocity.y = 1.1f;
@@ -153,12 +156,6 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // part of failed grappling code
-    if(freeze == true)
-    {
-        rigid.velocity = Vector3.zero;
-    }
-
     // opening the shop ui
     if(shopAction.triggered)
     {
@@ -170,7 +167,15 @@ public class PlayerController : MonoBehaviour
 
     HealthText.text = "Current health; " + currentHealth;
 
+    // pausing the game
+    if(pauseAction.triggered)
+    {
+        gameManager.GetComponent<PauseMenu>().PauseGame();
+        iisPaused = true;
     }
+
+    }
+
 
     public void PlayerTakeDamage(int damage)
     {
@@ -222,33 +227,6 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         shopOpen = false;
-    }
-
-    // Failed Grappling code WIP
-    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
-    {
-        float gravity = Physics.gravity.y;
-        float displacementY = endPoint.y - startPoint.y;
-        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
-
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
-        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity) + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
-
-        return velocityXZ + velocityY;
-    }
-
-    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
-    {
-        activeGrapple = true;
-
-        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
-        Invoke(nameof(SetVelocity), 0.1f);
-    }
-
-    private Vector3 velocityToSet;
-    private void SetVelocity()
-    {
-        rigid.velocity = velocityToSet;
     }
 
     public void AddAmmo(int amount)

@@ -7,6 +7,9 @@ public class CrystalTP : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Player teleported");
+        if(other.gameObject.CompareTag("Player"))
+        {
+            SceneManager.LoadScene("Crystal");
+        }
     }
 }
