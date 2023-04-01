@@ -394,6 +394,7 @@
 "Assets/Scripts/CrystalTP.cs"
 "Assets/Scripts/EnemyAI.cs"
 "Assets/Scripts/JetpackController.cs"
+"Assets/Scripts/LevelReset.cs"
 "Assets/Scripts/MenuController.cs"
 "Assets/Scripts/PauseMenu.cs"
 "Assets/Scripts/PlayerController.cs"

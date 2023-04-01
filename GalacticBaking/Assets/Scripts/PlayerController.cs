@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private InputAction shootAction;
     private InputAction jetpackAction;
     private InputAction shopAction;
-    public InputAction pauseAction;
+    private InputAction pauseAction;
 
     // Ammo var
     private int maxAmmo = 10;
@@ -48,10 +48,6 @@ public class PlayerController : MonoBehaviour
     private float maxFuel = 5f;
      Rigidbody rigid;
 
-    // failed grapple var
-    public bool freeze;
-    public bool activeGrapple;
-
     // shop vars
     public Canvas shopCanvas;
     bool shopOpen = false;
@@ -61,10 +57,16 @@ public class PlayerController : MonoBehaviour
     public GameObject gameManager;
     public bool iisPaused = false;
 
+    // win lose or level complete
+    public bool isDead = false;
+    bool winState = false;
+    public bool loseState = false;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
+        Debug.Log(playerInput);
         rigid = GetComponent<Rigidbody>();
         cameraTransform = Camera.main.transform;
         moveAction = playerInput.actions["Move"];
@@ -122,18 +124,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        // ground movement
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        Vector3 move = new Vector3(input.x, 0, input.y);
-        move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
-
-        controller.Move(move * Time.deltaTime * playerSpeed);
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }
+        MovePlayer();
 
         // jumping
         MovementJump();
@@ -153,7 +146,8 @@ public class PlayerController : MonoBehaviour
          // killing the player
     if(currentHealth <= 0)
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        loseState = true;
     }
 
     // opening the shop ui
@@ -161,8 +155,7 @@ public class PlayerController : MonoBehaviour
     {
        OpenShop();
        shopOpen = true;
-       Cursor.lockState = CursorLockMode.None;
-       Cursor.visible = true;
+
     }
 
     HealthText.text = "Current health; " + currentHealth;
@@ -173,7 +166,21 @@ public class PlayerController : MonoBehaviour
         gameManager.GetComponent<PauseMenu>().PauseGame();
         iisPaused = true;
     }
+    }
 
+    private void MovePlayer()
+    {
+        
+        // ground movement
+        Vector2 input = moveAction.ReadValue<Vector2>();
+        Vector3 move = new Vector3(input.x, 0, input.y);
+        move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
+
+        controller.Move(move * Time.deltaTime * playerSpeed);
+        if (move != Vector3.zero)
+        {
+            gameObject.transform.forward = move;
+        }
     }
 
 
@@ -219,6 +226,8 @@ public class PlayerController : MonoBehaviour
     {
         shopCanvas.gameObject.SetActive(true);
         shopOpen = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void CloseShop()

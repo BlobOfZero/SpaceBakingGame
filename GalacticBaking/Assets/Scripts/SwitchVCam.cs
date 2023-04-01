@@ -34,6 +34,7 @@ public class SwitchVCam : MonoBehaviour
     aimAction.canceled -= _ => CancelAim();
     }
 
+    
     private void StartAim()
     {
         virtualCamera.Priority += priorityBoostAmount;
@@ -47,4 +48,5 @@ public class SwitchVCam : MonoBehaviour
         thirdPersonCanvas.enabled = true;
         aimCanvas.enabled = false;
     }
+    
 }
