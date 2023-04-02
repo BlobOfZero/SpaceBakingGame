@@ -7,6 +7,6 @@ public class LevelReset : MonoBehaviour
 {
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("CrystalMountain");
     }
 }

@@ -61,11 +61,13 @@ public class PlayerController : MonoBehaviour
     public bool isDead = false;
     public bool loseState = false;
 
+    // Sound effects
+    public AudioClip gunFireSound;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
-        rigid = GetComponent<Rigidbody>();
         cameraTransform = Camera.main.transform;
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
