@@ -88,13 +88,11 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         shootAction.performed +=_ =>ShootGun();
-        moveAction.performed +=_ =>MovePlayer();
     }
 
     private void OnDisable()
     {
         shootAction.performed -=_ =>ShootGun();
-        moveAction.performed -=_ =>MovePlayer();
     }
 
     private void ShootGun()
@@ -124,9 +122,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        MovePlayer();
 
         // jumping
         MovementJump();
@@ -168,8 +165,8 @@ public class PlayerController : MonoBehaviour
     }
     }
 
-    private void MovePlayer()
-    {
+    void FixedUpdate()
+    {  
         
         // ground movement
         Vector2 input = moveAction.ReadValue<Vector2>();
