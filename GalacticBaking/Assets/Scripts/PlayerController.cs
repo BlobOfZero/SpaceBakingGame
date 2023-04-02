@@ -59,14 +59,12 @@ public class PlayerController : MonoBehaviour
 
     // win lose or level complete
     public bool isDead = false;
-    bool winState = false;
     public bool loseState = false;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
-        Debug.Log(playerInput);
         rigid = GetComponent<Rigidbody>();
         cameraTransform = Camera.main.transform;
         moveAction = playerInput.actions["Move"];
@@ -90,11 +88,13 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         shootAction.performed +=_ =>ShootGun();
+        moveAction.performed +=_ =>MovePlayer();
     }
 
     private void OnDisable()
     {
         shootAction.performed -=_ =>ShootGun();
+        moveAction.performed -=_ =>MovePlayer();
     }
 
     private void ShootGun()

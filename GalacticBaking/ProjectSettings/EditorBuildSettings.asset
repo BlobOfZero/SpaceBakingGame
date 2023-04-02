@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: d40de432a8533b24a8cd946646399fad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameHub.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Crystal.unity
-    guid: cdf6216f004fa164eac63539f9829dd6
+    path: Assets/Scenes/CrystalMountain.unity
+    guid: e04d0ba8c2697444489ae190d7c999ce
   m_configObjects: {}

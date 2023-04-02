@@ -30,7 +30,7 @@ public class SwitchVCam : MonoBehaviour
 
     private void OnDisable()
     {
-     aimAction.performed -= _ => StartAim();
+    aimAction.performed -= _ => StartAim();
     aimAction.canceled -= _ => CancelAim();
     }
 
@@ -48,5 +48,4 @@ public class SwitchVCam : MonoBehaviour
         thirdPersonCanvas.enabled = true;
         aimCanvas.enabled = false;
     }
-    
 }

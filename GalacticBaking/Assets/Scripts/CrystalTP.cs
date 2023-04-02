@@ -9,7 +9,7 @@ public class CrystalTP : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Crystal");
+            SceneManager.LoadScene("CrystalMountain");
         }
     }
 }

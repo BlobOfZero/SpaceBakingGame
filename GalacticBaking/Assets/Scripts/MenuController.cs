@@ -17,7 +17,7 @@ public class MenuController : MonoBehaviour
     }
     public void Play()
     {
-        SceneManager.LoadScene("GameHub");
+        SceneManager.LoadScene("CrystalMountain");
     }
 
     public void Options()
